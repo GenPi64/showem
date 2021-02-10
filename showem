@@ -191,8 +191,8 @@ get_extra_info() {
     # TOTAL is the total number of packages in that emerge sequence.
 
     # Inspired by https://github.com/gentoo-perl/genlop/blob/master/genlop#L625
-    grep -E -e '^[0-9]+:  >>> emerge \([0-9]+ of [0-9]+\) '"$PKGNAME"' to' "$MAIN_LOG_DIR/$EMERGE_LOG" | \
-        tail -n1 | sed -re 's@^([0-9]+):  >>> emerge \(([0-9]+) of ([0-9]+)\) ('"$PKGNAME"') to.*@\1 \2 \3@'
+    perl -ne 's@^([0-9]+):  >>> emerge \(([0-9]+) of ([0-9]+)\) (\Q'"$PKGNAME"'\E) to.*@\1 \2 \3@ and print' "$MAIN_LOG_DIR/$EMERGE_LOG" | \
+        tail -n1
 }
 monitor_current_builds() {
     # This function reports any changes from the last scan
